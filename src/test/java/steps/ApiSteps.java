@@ -1,5 +1,6 @@
 package steps;
 
+import io.qameta.allure.Step;
 import models.User;
 import models.Users;
 import specs.Specs;
@@ -11,6 +12,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
 
 public class ApiSteps {
+    @Step("Get user by id {id}")
     public User getUserById(int id) {
         return given(Specs.request)
                 .when()
@@ -21,6 +23,7 @@ public class ApiSteps {
                 .extract().as(User.class);
     }
 
+    @Step("Get users from page {page}")
     public Users getUsersFromPage(int page) {
         return given(Specs.request)
                 .queryParam("page", page)
@@ -30,6 +33,7 @@ public class ApiSteps {
                 .extract().as(Users.class);
     }
 
+    @Step("Check that user with email domain {domain} exists on first users page")
     public void userWithEmailDomainExist(String domain) {
         given(Specs.request)
                 .get(USERS.getPath())
