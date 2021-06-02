@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UserTests extends TestBase{
+public class UserTests extends TestBase {
     @Test
     @DisplayName("User with id=2 has email=janet.weaver@reqres.in")
     void userEmailTest() {
@@ -19,15 +19,13 @@ public class UserTests extends TestBase{
     void allUsersHaveIdTest() {
         Users usersList;
         int pageCounter = 0;
-        boolean hasMorePages = true;
-        while (hasMorePages) {
+        do {
             pageCounter++;
             usersList = apiSteps.getUsersFromPage(pageCounter);
             for (UserData userData : usersList.getUserData()) {
                 assertThat(apiSteps.getUserById(userData.getId()).getUserData().getId()).isEqualTo(userData.getId());
             }
-            hasMorePages = (usersList.getPage() < usersList.getTotalPages());
-        }
+        } while (usersList.getPage() < usersList.getTotalPages());
     }
 
     @Test
